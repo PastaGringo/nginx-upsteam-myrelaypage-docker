@@ -1,0 +1,29 @@
+map $http_accept $upstream {
+    default ${CONTAINER_MYRELAYPAGE}:80;
+    application/nostr+json ${CONTAINER_NOSTR_RELAY}:7777;
+}
+
+server {
+
+  location / {
+    add_header 'Cache-Control' 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+    if_modified_since off;
+    expires off;
+    etag off;
+    try_files /null @$http_upgrade;
+  }
+
+  location @websocket {
+    proxy_pass http://${CONTAINER_NOSTR_RELAY}:7777;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "Upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+  }
+
+  location @ {
+    add_header Access-Control-Allow-Headers *;
+    proxy_pass http://$upstream;
+  }
+}
