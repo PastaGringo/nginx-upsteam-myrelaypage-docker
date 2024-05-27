@@ -86,4 +86,4 @@ You can now access to your Nostr relay and find the myrelaypage homepage:
 
 ![img](https://slink.fractalized.net/image/0b83dd09-c174-4012-af05-be279c270fc6.png)
 
-You can check if the Nostr relay is working from: https://nostrrr.com/relay/YourNostrRelayUL
+You can check if the Nostr relay is working from: https://nostrrr.com/relay/YourNostrRelayURL or https://nostr.watch/relay/YourNostrRelayURL
